@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +61,7 @@ public class BotListener extends ListenerAdapter {
                         event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471400678154043412")).queue();
                     }
                 } else {
-                    event.getReaction().removeReaction().queue();
+                    event.getReaction().removeReaction(event.getMember().getUser()).queue();
                 }
             } else if (event.getMessageId().equals("471668210467471381")) {
                 if (event.getReactionEmote().isEmote()) {
@@ -69,43 +70,91 @@ public class BotListener extends ListenerAdapter {
                             if (!event.getMember().getRoles().contains(event.getGuild().getRoleById("471403052591611915"))) {
                                 event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471403052591611915")).queue();
                             }
-                            event.getReaction().removeReaction().queue();
                             break;
                         case "bronze":
                             if (!event.getMember().getRoles().contains(event.getGuild().getRoleById("471403030647013376"))) {
                                 event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471403030647013376")).queue();
                             }
-                            event.getReaction().removeReaction().queue();
                             break;
                         case "silver":
                             if (!event.getMember().getRoles().contains(event.getGuild().getRoleById("471403207760019476"))) {
                                 event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471403207760019476")).queue();
                             }
-                            event.getReaction().removeReaction().queue();
                             break;
                         case "gold":
                             if (!event.getMember().getRoles().contains(event.getGuild().getRoleById("471403067552563233"))) {
                                 event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471403067552563233")).queue();
                             }
-                            event.getReaction().removeReaction().queue();
                             break;
                         case "platinum":
                             if (!event.getMember().getRoles().contains(event.getGuild().getRoleById("471403080844312587"))) {
                                 event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471403080844312587")).queue();
                             }
-                            event.getReaction().removeReaction().queue();
                             break;
                         case "diamond":
                             if (!event.getMember().getRoles().contains(event.getGuild().getRoleById("471403115611029514"))) {
                                 event.getGuild().getController().addSingleRoleToMember(event.getMember(), event.getGuild().getRoleById("471403115611029514")).queue();
                             }
-                            event.getReaction().removeReaction().queue();
                         default:
-                            event.getReaction().removeReaction().queue();
+                            event.getReaction().removeReaction(event.getMember().getUser()).queue();
                             break;
                     }
                 } else {
-                    event.getReaction().removeReaction().queue();
+                    event.getReaction().removeReaction(event.getMember().getUser()).queue();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onMessageReactionRemove(MessageReactionRemoveEvent event) {
+        if (event.getChannel().getId().equals("471406980137746442")) {
+            if (event.getMessageId().equals("471661254746963988")) {
+                if (event.getReactionEmote().getName().equals("\u2714")) {
+                    if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471400678154043412"))) {
+                        event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471400678154043412")).queue();
+                    }
+                } else {
+                    event.getReaction().removeReaction(event.getMember().getUser()).queue();
+                }
+            } else if (event.getMessageId().equals("471668210467471381")) {
+                if (event.getReactionEmote().isEmote()) {
+                    switch (event.getReactionEmote().getEmote().getName()) {
+                        case "copper":
+                            if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471403052591611915"))) {
+                                event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471403052591611915")).queue();
+                            }
+                            break;
+                        case "bronze":
+                            if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471403030647013376"))) {
+                                event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471403030647013376")).queue();
+                            }
+                            break;
+                        case "silver":
+                            if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471403207760019476"))) {
+                                event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471403207760019476")).queue();
+                            }
+                            break;
+                        case "gold":
+                            if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471403067552563233"))) {
+                                event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471403067552563233")).queue();
+                            }
+                            break;
+                        case "platinum":
+                            if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471403080844312587"))) {
+                                event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471403080844312587")).queue();
+                            }
+                            break;
+                        case "diamond":
+                            if (event.getMember().getRoles().contains(event.getGuild().getRoleById("471403115611029514"))) {
+                                event.getGuild().getController().removeSingleRoleFromMember(event.getMember(), event.getGuild().getRoleById("471403115611029514")).queue();
+                            }
+                        default:
+                            event.getReaction().removeReaction(event.getMember().getUser()).queue();
+                            break;
+                    }
+                } else {
+                    event.getReaction().removeReaction(event.getMember().getUser()).queue();
                 }
             }
         }
