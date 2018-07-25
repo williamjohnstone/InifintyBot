@@ -15,11 +15,10 @@ public class Config {
     public static String dbConnection;
     public static String fallback_prefix;
     public static String sentry_dsn;
-    public static String config_file;
 
     public void loadConfig() {
         try {
-            JSONConfig config = new JSONConfig(config_file);
+            JSONConfig config = new JSONConfig("config.json");
             Discord_Token = config.getString("Bot_Config.Authorization.Discord_Token").get();
             dbConnection = config.getString("Bot_Config.Authorization.Database_String").get();
             fallback_prefix = config.getString("Bot_Config.Settings.Fallback_Prefix").get();
