@@ -1,0 +1,39 @@
+# IntelliJ
+.idea
+target/
+*.iml
+
+# Private files
+logs/
+*.log
+*.json
+build/
+out/
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Gradle
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk

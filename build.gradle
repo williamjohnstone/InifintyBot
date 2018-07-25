@@ -1,0 +1,72 @@
+plugins {
+    id'java'
+    id'application'
+    id'maven'
+    id'com.github.johnrengelman.shadow' version '2.0.2'
+    id 'de.fuerstenau.buildconfig' version '1.1.8'
+    id 'idea'
+}
+
+group = 'ml.enzodevelopment'
+version = "1.0.0_${getGitHashShort()}"
+
+mainClassName = 'ml.enzodevelopment.infinitybot.InfinityBot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+shadowJar {
+    baseName = "InfintyBot"
+    classifier = null
+    version = null
+    libsDirName = "../out"
+}
+
+repositories {
+    maven { url 'http://jcenter.bintray.com' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'mvnrepository.com' }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+}
+
+buildConfig {
+    appName = project.name
+    version = project.version
+    buildConfigField("String", "OWNER_ID", "205056315351891969")
+    buildConfigField("String", "GH_COMMIT", "${getGitHash()}")
+    buildConfigField("String", "GH_COMMIT_SHORT", "${getGitHashShort()}")
+    packageName = 'ml.enzodevelopment.infinitybot'
+    charset = 'UTF-8'
+    clsName = 'BuildConfig'
+}
+
+dependencies {
+    compile group: 'net.dv8tion', name: 'JDA', version:'3.7.1_385'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.2.3'
+    compile group: 'mysql', name: 'mysql-connector-java', version:'8.0.8-dmr'
+    compile group: 'com.github.binaryoverload', name: 'JSON-Config', version:'2.7.8'
+    compile group: 'io.sentry', name: 'sentry-logback', version:'1.7.2'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.4.13'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+def getGitHash() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        //commandLine "cmd","/c",'git', 'rev-parse', 'master'
+        commandLine 'git', 'rev-parse', 'master'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def getGitHashShort() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        // commandLine "cmd","/c",'git', 'rev-parse', '--short', 'master'
+        commandLine 'git', 'rev-parse', '--short', 'master'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
